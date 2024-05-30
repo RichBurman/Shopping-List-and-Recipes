@@ -37,5 +37,6 @@ onEditRecipe() {
 
 onDeleteRecipe() {
   this.recipeService.deleteRecipe(this.id);
+  this.router.navigate(['/recipes']);
 }
 }
