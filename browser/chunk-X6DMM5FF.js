@@ -1,0 +1,1 @@
+var c=function(a){return a.Meat="Meat",a.Veg="Vegetables",a.Dairy="Dairy",a.StoreCupboard="Store Cupboard",a.Pasta="Pasta",a.Fish="Fish",a.HerbsAndSpices="Herbs and Spices",a.Fruit="Fruits",a}(c||{}),s=class{constructor(t,o,r,u){this.name=t,this.amount=o,this.type=r,this.recipeName=u}};export{c as a,s as b};

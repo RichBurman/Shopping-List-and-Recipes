@@ -1,0 +1,1 @@
+import{m as i}from"./chunk-MY5YCN2Y.js";var a=(()=>{let t=class t{printLog(r){console.log(r),console.log(this.lastlog),this.lastlog=r}};t.\u0275fac=function(l){return new(l||t)},t.\u0275prov=i({token:t,factory:t.\u0275fac,providedIn:"root"});let o=t;return o})();export{a};
