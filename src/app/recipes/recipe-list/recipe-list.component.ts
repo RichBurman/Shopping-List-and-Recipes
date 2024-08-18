@@ -4,40 +4,50 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Recipe } from '../recipe.model';
 import { RecipeService } from '../recipe.service';
-
-
+import { DataStorageService } from '../../shared/data-storage.service'; // Adjust the import path if necessary
 
 @Component({
   selector: 'app-recipe-list',
   templateUrl: './recipe-list.component.html',
-  styleUrl: './recipe-list.component.css'
+  styleUrls: ['./recipe-list.component.css'] // Adjust if needed
 })
 export class RecipeListComponent implements OnInit, OnDestroy {
-  recipes: Recipe[];
-  subscription: Subscription;
+  recipes: Recipe[] = [];
+  private subscription: Subscription;
 
-  constructor(private RecipeService: RecipeService,
-              private router: Router,
-              private route: ActivatedRoute
-  ) {
-  }
+  constructor(
+    private recipeService: RecipeService,
+    private dataStorageService: DataStorageService, // Inject DataStorageService
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-    this.subscription = this.RecipeService.recipesChanged
-    .subscribe(
+    // Fetch recipes from Firebase when the component initializes
+    this.dataStorageService.fetchRecipes().subscribe(
+      recipes => {
+        this.recipes = recipes;
+      },
+      error => {
+        console.error('Error fetching recipes:', error);
+      }
+    );
+
+    // Subscribe to recipe changes
+    this.subscription = this.recipeService.recipesChanged.subscribe(
       (recipes: Recipe[]) => {
         this.recipes = recipes;
       }
-    )
-    this.recipes = this.RecipeService.getRecipes();
+    );
   }
 
   onNewRecipe() {
-    this.router.navigate(['new'], {relativeTo: this.route})
+    this.router.navigate(['new'], { relativeTo: this.route });
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
-
 }
