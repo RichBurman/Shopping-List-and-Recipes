@@ -1,6 +1,9 @@
 <div class="row">
   <div class="col-xs-10">
       <app-shopping-edit></app-shopping-edit>
+      <div class="row">
+        <div class="col-xs-12">
+          <button class="btn btn-primary" (click)="generatePDF()">Download PDF</button>
       <hr>
       <ul class="list-group">
           <div *ngFor="let type of ingredientTypes">
@@ -12,7 +15,7 @@
               (click)="onEditItem(i)"
               >
               {{ ingredient.name }} ({{ ingredient.amount }}) 
-              <span *ngIf="ingredient.recipeName"> - From: {{ ingredient.recipeName }}</span>
+              <span *ngIf="ingredient.recipeName"> - Recipe: {{ ingredient.recipeName }}</span>
           </a>
           </div>
       </ul>

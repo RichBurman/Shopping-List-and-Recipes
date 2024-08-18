@@ -4,6 +4,7 @@ import { ShoppingListService } from './shopping-list.service';
 import { Subscription } from 'rxjs';
 import { LoggingService } from '../logging.service';
 import { IngredientType } from '../shared/ingredient.model'; // Adjust import if needed
+import jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-shopping-list',
@@ -76,4 +77,43 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
       console.warn('No ingredients available');
     }
   }
+
+  generatePDF() {
+    const doc = new jsPDF();
+    let yPosition = 10; // Initial vertical position for text
+    
+    // Title
+    doc.setFontSize(18);
+    doc.text('Shopping List', 10, yPosition);
+    yPosition += 15; // Space between title and content
+  
+    // Iterate over each ingredient type
+    this.ingredientTypes.forEach(type => {
+      const ingredients = this.groupedIngredients[type];
+      
+      if (ingredients.length > 0) {
+        // Add heading for each type
+        doc.setFontSize(14);
+        doc.setFont('helvetica', 'bold');
+        doc.text(type, 10, yPosition);
+        yPosition += 10; // Space after heading
+  
+        // Add ingredients for this type
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'normal');
+        ingredients.forEach(ingredient => {
+          // Format: Name (Amount) - Recipe
+          const recipeInfo = ingredient.recipeName ? ` - From: ${ingredient.recipeName}` : '';
+          doc.text(`${ingredient.name} (${ingredient.amount})${recipeInfo}`, 10, yPosition);
+          yPosition += 10; // Move down for the next item
+        });
+  
+        yPosition += 5; // Extra space between different types
+      }
+    });
+  
+    // Save the PDF
+    doc.save('shopping-list.pdf');
+  }
 }
+
