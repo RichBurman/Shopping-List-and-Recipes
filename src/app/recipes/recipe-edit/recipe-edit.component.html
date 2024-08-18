@@ -74,6 +74,13 @@
                                 class="form-control"
                                 formControlName="amount">
                         </div>
+                        <div class="col-xs-3">
+                            <select 
+                              class="form-control"
+                              formControlName="type">
+                              <option *ngFor="let type of types | keyvalue" [value]="type.value">{{ type.value }}</option>
+                            </select>
+                          </div>
                         <div class="col-xs-2">
                             <button 
                             type="button"

@@ -27,7 +27,7 @@ ngOnInit() {
 }
 
 onAddToShoppingList() {
-  this.recipeService.addIngredientsToShoppingList(this.recipe.ingredients);
+  this.recipeService.addIngredientsToShoppingList(this.recipe.ingredients, this.recipe.name);
 }
 
 onEditRecipe() {

@@ -58,8 +58,13 @@ export class RecipeService {
         return this.recipes[index];
       }
 
-      addIngredientsToShoppingList(ingredients: Ingredient[]) {
-        this.slService.addIngredients(ingredients);
+      addIngredientsToShoppingList(ingredients: Ingredient[], recipeName: string) {
+        // Add recipeName to each ingredient
+        const ingredientsWithRecipeName = ingredients.map(ingredient => ({
+          ...ingredient,
+          recipeName
+        }));
+        this.slService.addIngredients(ingredientsWithRecipeName);
       }
 
       addRecipe(recipe: Recipe) {
